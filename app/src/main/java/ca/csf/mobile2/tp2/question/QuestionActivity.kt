@@ -1,13 +1,12 @@
 package ca.csf.mobile2.tp2.question
 
 import android.annotation.SuppressLint
+import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import ca.csf.mobile2.tp2.R
+import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EActivity
 import org.androidannotations.annotations.ViewById
 import org.w3c.dom.Text
@@ -40,6 +39,72 @@ class QuestionActivity : AppCompatActivity() {
     protected lateinit var errorTextViewById : TextView
     @ViewById(R.id.retry_button)
     protected lateinit var retryButton : Button
+
     @ViewById(R.id.progressBar)
     protected lateinit var progressBar : ProgressBar
+    @ViewById(R.id.toolbar)
+    protected lateinit var toolbar : Toolbar
+
+    @AfterViews
+    protected fun afterViews() {
+        showResults()
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = View.INVISIBLE
+    }
+
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun showQuestions() {
+        choice1Button.visibility = View.VISIBLE
+        choice2Button.visibility = View.VISIBLE
+
+        toolbar.visibility = View.VISIBLE
+    }
+
+    private fun hideQuestions() {
+        choice1Button.visibility = View.INVISIBLE
+        choice2Button.visibility = View.INVISIBLE
+
+        toolbar.visibility = View.INVISIBLE
+    }
+
+    private fun showResults() {
+        choice1TextView.visibility = View.VISIBLE
+        choice1ResultTextView.visibility = View.VISIBLE
+        choice1ResultBackground.visibility = View.VISIBLE
+
+        choice2TextView.visibility = View.VISIBLE
+        choice2ResultTextView.visibility = View.VISIBLE
+        choice2ResultBackground.visibility = View.VISIBLE
+
+        toolbar.visibility = View.VISIBLE
+    }
+
+    private fun hideResults() {
+        choice1TextView.visibility = View.INVISIBLE
+        choice1ResultTextView.visibility = View.INVISIBLE
+        choice1ResultBackground.visibility = View.INVISIBLE
+
+        choice2TextView.visibility = View.INVISIBLE
+        choice2ResultTextView.visibility = View.INVISIBLE
+        choice2ResultBackground.visibility = View.INVISIBLE
+    }
+
+    private fun showError() {
+        errorImageView.visibility = View.VISIBLE
+        errorTextViewById.visibility = View.VISIBLE
+        retryButton.visibility = View.VISIBLE
+
+        toolbar.visibility = View.INVISIBLE
+    }
+
+    private fun hideError() {
+        errorImageView.visibility = View.INVISIBLE
+        errorTextViewById.visibility = View.INVISIBLE
+        retryButton.visibility = View.INVISIBLE
+    }
 }
