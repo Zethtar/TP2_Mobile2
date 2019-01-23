@@ -3,6 +3,7 @@ package ca.csf.mobile2.tp2.question
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import ca.csf.mobile2.tp2.util.ViewModelProperty
+import com.fasterxml.jackson.databind.ser.std.NumberSerializers
 import org.parceler.Parcel
 import org.parceler.ParcelConstructor
 
@@ -10,7 +11,7 @@ import org.parceler.ParcelConstructor
 class QuestionActivityViewModel @ParcelConstructor constructor() : BaseObservable() {
 
     var question : Question by ViewModelProperty(Question(), this)
-    val totalAnswers get() = question.nbChoice1 + question.nbChoice1
+    private val totalAnswers get() = question.nbChoice1 + question.nbChoice2
 
     @get:Bindable
     var activityState : QuestionActivityState by ViewModelProperty(QuestionActivityState.Question, this)
@@ -24,7 +25,7 @@ class QuestionActivityViewModel @ParcelConstructor constructor() : BaseObservabl
     val nbChoice1 : String
         get() {
             return if (totalAnswers > 0)
-                (question.nbChoice2 / totalAnswers * 100).toString() + "%"
+                ((question.nbChoice1.toFloat() / totalAnswers.toFloat() * 100).toInt()).toString() + "%"
             else
                 "0%"
         }
@@ -33,7 +34,7 @@ class QuestionActivityViewModel @ParcelConstructor constructor() : BaseObservabl
     val nbChoice2 : String //TODO("Better this / remove")
         get() {
             return if (totalAnswers > 0)
-                (question.nbChoice2 / totalAnswers * 100).toString() + "%"
+                ((question.nbChoice2.toFloat() / totalAnswers.toFloat() * 100).toInt()).toString() + "%"
             else
                 "0%"
     }

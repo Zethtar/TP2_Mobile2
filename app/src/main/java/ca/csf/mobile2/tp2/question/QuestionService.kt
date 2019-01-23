@@ -50,7 +50,7 @@ class QuestionService {
 
     @Background
     fun sendAnswerQuestion(id : String,
-                           choice : Int,
+                           choice : String,
                            onSuccess : () -> Unit,
                            onConnectivityError : () -> Unit,
                            onServerError : () -> Unit) {
@@ -72,8 +72,8 @@ class QuestionService {
         @GET("/api/v1/question/random")
         fun getRandomQuestion() : Call<Question>
 
-        @POST("/{id}/choice{choice}")
+        @POST("/api/v1/question/{id}/{choice}")
         fun sendAnswerQuestion(@Path("id")id : String,
-                               @Path("choice")choice : Int) : Call<Question>
+                               @Path("choice")choice : String) : Call<Question>
     }
 }

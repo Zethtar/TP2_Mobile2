@@ -42,9 +42,10 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     private fun sendAnswerQuestion(choice : Int) {
+
         questionService.sendAnswerQuestion(
             viewModelAct.question.id,
-            choice,
+            "choose" + choice.toString(),
             this::onAnswerSend,
             this::onConnectivityError,
             this::onServerError
@@ -86,13 +87,13 @@ class QuestionActivity : AppCompatActivity() {
         sendAnswerQuestion(2)
     }
 
-    //@Click(R.layout.activity_question)
-    //protected fun onScreenClick() {
-//
-    //    if(viewModelAct.activityState == QuestionActivityState.Results) {
-    //        getRandomQuestion()
-    //    }
-    //}
+    @Click(R.id.root_view)
+    protected fun onScreenClick() {
+
+        if(viewModelAct.activityState == QuestionActivityState.Results) {
+            getRandomQuestion()
+        }
+    }
 
     @Click(R.id.retry_button)
     protected fun onRetryClick() {

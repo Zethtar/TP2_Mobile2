@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Préfèrez-vous…</string>
+
+    <string name="title_activity_question">Préfèrez-vous…</string>
+    <string name="title_activity_create_question">Créez votre propre question</string>
+
+    <string name="text_or">Ou</string>
+    <string name="text_question">Votre question</string>
+    <string name="text_choice1">Premier choix</string>
+    <string name="text_choice2">Second choix</string>
+    <string name="text_report_thanks">Cette question a été reportée. Merci!</string>
+
+    <string name="text_btn_create">Créez question</string>
+    <string name="text_btn_retry">Recommencez</string>
+    <string name="text_btn_report">Reportez</string>
+
+    <string name="text_error">Erreur</string>
+    <string name="text_error_internet">Pas de connection Internet. Veuillez réessayer plus tard.</string>
+    <string name="text_error_server">Quelquechose a échoué. Veuillez réessayer plus tard.</string>
+    <string name="text_error_field">Veuillez remplir ce champ.</string>
+    <string name="text_error_validation">Veuillez remplir tous les champs.</string>
+
+    <string name="text_initial_quesiton" tools:ignore="TypographyEllipsis">Préfèrez-vous...</string>
+</resources>
