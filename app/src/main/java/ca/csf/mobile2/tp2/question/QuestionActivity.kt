@@ -16,48 +16,6 @@ import org.androidannotations.annotations.*
 @EActivity(R.layout.activity_question)
 class QuestionActivity : AppCompatActivity() {
 
-    @ViewById(R.id.question_view)
-    protected lateinit var questionLayout : ConstraintLayout
-    @ViewById(R.id.answers_view)
-    protected lateinit var answerLayout : ConstraintLayout
-    @ViewById(R.id.error_view)
-    protected lateinit var errorLayout : ConstraintLayout
-    @ViewById(R.id.loading_view)
-    protected lateinit var loadingLayout: FrameLayout
-
-    @ViewById(R.id.choice1_button)
-    protected lateinit var choice1Button : Button
-    @ViewById(R.id.choice1_result_background)
-    protected lateinit var choice1ResultBackground : View
-    @ViewById(R.id.choice1_result_textview)
-    protected lateinit var choice1ResultTextView : TextView
-    @ViewById(R.id.choice1_textview)
-    protected lateinit var choice1TextView: TextView
-
-    @ViewById(R.id.choice2_button)
-    protected lateinit var choice2Button: Button
-    @ViewById(R.id.choice2_result_background)
-    protected lateinit var choice2ResultBackground : View
-    @ViewById(R.id.choice2_result_textview)
-    protected lateinit var choice2ResultTextView : TextView
-    @ViewById(R.id.choice2_textview)
-    protected lateinit var choice2TextView: TextView
-
-    @ViewById(R.id.error_imageview)
-    protected lateinit var errorImageView : ImageView
-    @ViewById(R.id.error_textview)
-    protected lateinit var errorTextView : TextView
-    @ViewById(R.id.retry_button)
-    protected lateinit var retryButton : Button
-
-    @ViewById(R.id.progressBar)
-    protected lateinit var progressBar : ProgressBar
-    @ViewById(R.id.toolbar)
-    protected lateinit var toolbar : Toolbar
-
-    @InstanceState
-    protected lateinit var currentQuestion : Question
-
     @Bean
     protected lateinit var questionService : QuestionService
 
@@ -71,8 +29,6 @@ class QuestionActivity : AppCompatActivity() {
         }
 
         dataBinder.viewModel = viewModelAct
-
-        choice1Button.visibility = View.VISIBLE
     }
 
     private fun getRandomQuestion() {
@@ -85,12 +41,26 @@ class QuestionActivity : AppCompatActivity() {
         )
     }
 
+    private fun sendAnswerQuestion(choice : Int) {
+        questionService.sendAnswerQuestion(
+            viewModelAct.question.id,
+            choice,
+            this::onAnswerSend,
+            this::onConnectivityError,
+            this::onServerError
+        )
+    }
+
     @UiThread
     protected fun onQuestionFound(question : Question) {
-        currentQuestion = question
 
         viewModelAct.question = question
         viewModelAct.activityState = QuestionActivityState.Question
+    }
+
+    @UiThread
+    protected fun onAnswerSend() {
+        viewModelAct.activityState = QuestionActivityState.Results
     }
 
     @UiThread
@@ -103,6 +73,26 @@ class QuestionActivity : AppCompatActivity() {
         viewModelAct.activityState = QuestionActivityState.Error
         viewModelAct.isConnectivityError = false
     }
+
+    @Click(R.id.choice1_button)
+    protected fun choice1ButtonButtonClicked() {
+
+        sendAnswerQuestion(1)
+    }
+
+    @Click(R.id.choice2_button)
+    protected fun choice2ButtonButtonClicked() {
+
+        sendAnswerQuestion(2)
+    }
+
+    //@Click(R.layout.activity_question)
+    //protected fun onScreenClick() {
+//
+    //    if(viewModelAct.activityState == QuestionActivityState.Results) {
+    //        getRandomQuestion()
+    //    }
+    //}
 
     @Click(R.id.retry_button)
     protected fun onRetryClick() {

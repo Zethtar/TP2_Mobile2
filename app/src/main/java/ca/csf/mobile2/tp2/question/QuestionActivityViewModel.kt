@@ -13,7 +13,7 @@ class QuestionActivityViewModel @ParcelConstructor constructor() : BaseObservabl
     val totalAnswers get() = question.nbChoice1 + question.nbChoice1
 
     @get:Bindable
-    var activityState : QuestionActivityState by ViewModelProperty(QuestionActivityState.Answer, this)
+    var activityState : QuestionActivityState by ViewModelProperty(QuestionActivityState.Question, this)
     @get:Bindable
     val text get() = question.text
     @get:Bindable

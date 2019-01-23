@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import java.io.IOException
 
 @EBean(scope = EBean.Scope.Singleton)
@@ -47,9 +48,32 @@ class QuestionService {
         }
     }
 
+    @Background
+    fun sendAnswerQuestion(id : String,
+                           choice : Int,
+                           onSuccess : () -> Unit,
+                           onConnectivityError : () -> Unit,
+                           onServerError : () -> Unit) {
+        try {
+            val response = service.sendAnswerQuestion(id, choice).execute()
+            if(response.isSuccessful) {
+                onSuccess()
+            } else {
+                onServerError()
+            }
+
+        } catch (e : IOException) {
+            onConnectivityError()
+        }
+    }
+
     private interface Service {
 
         @GET("/api/v1/question/random")
         fun getRandomQuestion() : Call<Question>
+
+        @POST("/{id}/choice{choice}")
+        fun sendAnswerQuestion(@Path("id")id : String,
+                               @Path("choice")choice : Int) : Call<Question>
     }
 }
